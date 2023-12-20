@@ -1,4 +1,7 @@
 import 'package:fire_base_operations/view/crud_screen/crud_screen.dart';
+import 'package:fire_base_operations/view/image_screen/image_screen.dart';
+import 'package:fire_base_operations/view/login_screen/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class OptionsScreen extends StatefulWidget {
@@ -12,6 +15,22 @@ class _OptionsScreenState extends State<OptionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                  (route) => false);
+            },
+            icon: Icon(Icons.logout),
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -38,7 +57,14 @@ class _OptionsScreenState extends State<OptionsScreen> {
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ImageScreen(),
+                      ),
+                    );
+                  },
                   child: Text("image upload"),
                 ),
               ],
